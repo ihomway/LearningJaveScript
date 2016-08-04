@@ -152,3 +152,20 @@ function grun(g) {
         }
     })();
 }
+
+// function* theFutureIsNow() {
+//     const dataA = yield nfcall(fs.readFile, 'a.txt');
+//     const dataB = yield nfcall(fs.readFile, 'b.txt');
+//     const dataC = yield nfcall(fs.readFile, 'c.txt');
+//     yield ptimeout(60 * 1000);
+//     yield nfcall(fs.writeFile, 'd.txt', dataA + dataB + dataC);
+// }
+
+function* theFutureIsNow() {
+    const data = yield Promise.all([
+        nfcall(fs.readFile, 'a.txt'),
+        nfcall(fs.readFile, 'b.txt'),
+        nfcall(fs.readFile, 'c.txt')]);
+    yield ptimeout(60 * 1000);
+    yield nfcall(fs.writeFile, 'd.txt', dataA + dataB + dataC);
+}
